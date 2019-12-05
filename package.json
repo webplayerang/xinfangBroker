@@ -1,0 +1,88 @@
+{
+  "name": "xinfang-broker",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "configureJPush": "node node_modules/jpush-react-native/JPushConfiguration.js",
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "build-android": "build/build-android.sh",
+    "build-ios": "build/build-ios.sh",
+    "build": "npm run build-android && npm run build-ios",
+    "clean": "rm -rf android/ ios/ && git checkout -- android ios",
+    "install-apk": "adb install -r android/app/build/outputs/apk/AnChang.apk"
+  },
+  "dependencies": {
+    "@babel/plugin-proposal-decorators": "^7.7.4",
+    "axios": "0.16.2",
+    "jcore-react-native": "1.1.8-beta2",
+    "jpush-react-native": "2.0.7",
+    "metro-bundler": "0.20.0",
+    "mobx": "^4.15.0",
+    "mobx-react": "5.4.4",
+    "native-echarts": "0.3.0",
+    "prop-types": "15.6.0",
+    "react": "16.8.3",
+    "react-native": "0.59.8",
+    "react-native-af-video-player": "^0.1.9",
+    "react-native-code-push": "5.1.3-beta",
+    "react-native-contacts": "1.0.2",
+    "react-native-datepicker": "1.6.0",
+    "react-native-device-info": "0.16.0",
+    "react-native-easy-toast": "^1.2.0",
+    "react-native-fs": "2.10.14",
+    "react-native-image-crop-picker": "0.20.0",
+    "react-native-image-picker": "0.26.7",
+    "react-native-image-placeholder": "1.0.7",
+    "react-native-image-zoom-viewer": "2.2.26",
+    "react-native-keyboard-aware-scroll-view": "0.4.1",
+    "react-native-keyboard-spacer": "0.4.1",
+    "react-native-linear-gradient": "2.3.0",
+    "react-native-percentage-circle": "1.0.6",
+    "react-native-picker": "4.2.0",
+    "react-native-popup-dialog": "0.18.2",
+    "react-native-safe-area-view": "0.14.8",
+    "react-native-scrollable-tab-view": "^1.0.0",
+    "react-native-simple-radio-button": "2.7.0",
+    "react-native-smart-barcode": "1.0.6",
+    "react-native-storage": "0.2.2",
+    "react-native-swiper": "1.5.13",
+    "react-native-tab-view": "0.0.67",
+    "react-native-ultimate-listview": "3.2.4",
+    "react-native-video": "^2.3.1",
+    "react-navigation": "^2.11.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/runtime": "^7.7.4",
+    "babel-jest": "^24.9.0",
+    "babel-plugin-mobx-deep-action": "1.5.2",
+    "babel-plugin-syntax-decorators": "6.13.0",
+    "babel-plugin-transform-class-properties": "6.24.1",
+    "babel-plugin-transform-decorators-legacy": "1.3.4",
+    "babel-plugin-transform-regenerator": "6.26.0",
+    "babel-plugin-transform-remove-console": "6.8.4",
+    "babel-preset-react-native": "4.0.0",
+    "eslint": "4.6.1",
+    "eslint-config-airbnb": "15.1.0",
+    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-jsx-a11y": "5.1.1",
+    "eslint-plugin-react": "7.3.0",
+    "jest": "^24.9.0",
+    "metro-react-native-babel-preset": "^0.57.0",
+    "react-test-renderer": "16.8.3"
+  },
+  "babel": {
+    "plugins": [
+      [
+        "@babel/plugin-proposal-decorators",
+        {
+          "legacy": true
+        }
+      ]
+    ]
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
