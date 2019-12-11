@@ -20,7 +20,9 @@ import MyDatePicker from '../../components/MyDatePicker';
 // import { screen } from '../../utils';
 // import { getDaysInOneMonth } from '../../utils/tool';
 // import { KeyboardAwareListView } from '../../../node_modules/react-native-keyboard-aware-scroll-view/index';
+
 @observer
+
 export default class Contract extends Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;

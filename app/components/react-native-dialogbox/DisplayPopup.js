@@ -14,14 +14,6 @@ export default class DisplayPopup extends PureComponent {
     isOverlayClickClose: PropTypes.bool,
     onDismiss: PropTypes.func,
     style: PropTypes.shape(styleShape),
-    content: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-      PropTypes.arrayOf(PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-      ])),
-    ]),
     title: PropTypes.string,
     btns: PropTypes.arrayOf(PropTypes.shape({
       text: PropTypes.string.isRequired,

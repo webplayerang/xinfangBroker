@@ -22,18 +22,7 @@ class Autocomplete extends PureComponent {
      * These styles will be applied to the container which surrounds
      * the textInput component.
      */
-    keyboardShouldPersistTaps: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.boolean,
-    ]),
-    /*
-     * These styles will be applied to the container which surrounds
-     * the result list.
-     */
     onShowResults: PropTypes.func,
-    /**
-     * method for intercepting swipe on ListView. Used for ScrollView support on Android
-     */
     // onStartShouldSetResponderCapture: PropTypes.func,
     /**
      * `renderItem` will be called to render the data objects

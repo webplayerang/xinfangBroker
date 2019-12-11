@@ -72,11 +72,8 @@ import com.android.build.OutputFile
  * ]
  */
 
-project.ext.react = [
-    entryFile: "index.js"
-]
-
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -91,7 +88,8 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+//混淆打包
+def enableProguardInReleaseBuilds = true
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -102,24 +100,42 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.xinfangbroker"
+        applicationId "com.android.xinfang"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        // 每次升级包要将 versionCode +1
+        versionCode 27
+        versionName "3.4.7"
+        multiDexEnabled = true
+        vectorDrawables.useSupportLibrary = true
+        ndk {
+            abiFilters "armeabi-v7a", "x86"
+        }
+        manifestPlaceholders = [
+            JPUSH_APPKEY: "680ad7dadb9c1f2820f06189", //在此替换你的APPKey
+            JSHARE_PKGNAME: "com.android.xinfang",
+            WECHAT_APPID: "wxafdfe69b160f2873",
+            APP_CHANNEL: "developer-default",    //应用渠道号
+            UMENG_APPKEY: "5a13ec9ef29d986a4100012a",
+            UMENG_CHANNEL: "default"    //应用渠道号
+        ]
     }
     splits {
         abi {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
             universalApk false  // If true, also generate a universal APK
-            include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+            include "armeabi-v7a", "x86"
         }
     }
+
     buildTypes {
+
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            buildConfigField "String", "PRODUCT_ID", '"e3b906f9-2244-4244-9fa5-2467b28cd9a9"'
+            buildConfigField "String", "CODEPUSH_KEY", '"ChiKEAlK1DRHEQqPLrYTjtSgLCZB4ksvOXqog"'
         }
     }
     // applicationVariants are e.g. debug, release
@@ -127,7 +143,7 @@ android {
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "x86":2, "arm64-v8a": 3, "x86_64": 4]
+            def versionCodes = ["armeabi-v7a":1, "x86":2]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
@@ -142,19 +158,29 @@ dependencies {
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-keep-awake')
     implementation project(':react-native-video')
-    implementation project(':react-native-smart-barcode')
-    implementation project(':react-native-picker')
     implementation project(':react-native-linear-gradient')
-    implementation project(':react-native-image-picker')
-    implementation project(':react-native-image-crop-picker')
     implementation project(':react-native-fs')
+    implementation project(':react-native-smart-barcode')
+    // implementation project(':react-native-camera')
+    implementation project(':react-native-image-crop-picker')
+    implementation project(':react-native-image-picker')
     implementation project(':react-native-device-info')
-    implementation project(':react-native-contacts')
+    implementation project(':react-native-picker')
     implementation project(':react-native-code-push')
+    implementation project(':react-native-contacts')
+
+    // implementation project(':janalytics-react-native')
     implementation project(':jpush-react-native')
+    implementation project(':jcore-react-native')  // 添加 jcore 依赖
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation 'com.umeng.analytics:analytics:latest.integration' // 友盟统计 SDK
+    //okhttp
+    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    //gson
+    implementation 'com.google.code.gson:gson:2.8.2'
 }
 
 // Run this once to be able to run the application with BUCK

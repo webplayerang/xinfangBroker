@@ -27,7 +27,7 @@ export default class ScanQRcode extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount () {
 
   }
 
@@ -62,7 +62,7 @@ export default class ScanQRcode extends Component {
     }
   };
 
-  render() {
+  render () {
     return (
       <View style={styles.container}>
         <Barcode

@@ -8,7 +8,7 @@ import {
   DeviceEventEmitter,
   StyleSheet,
 } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 import JPushModule from 'jpush-react-native';
 import codePush from 'react-native-code-push';
 
@@ -63,21 +63,23 @@ const navigatorConfig = {
   },
 };
 
-async function initRouer() {
+let MyNavigator = null;
+let AppContainer = null;
+
+async function initRouer () {
   return global.storage.load({
     key: 'adv',
   }).then((res) => res).catch(() => false);
 }
 
-async function setRouter() {
+async function setRouter () {
   const flag = await initRouer();
   navigatorConfig.initialRouteName = flag ? 'Login' : 'AdvSwiper';
 }
 
 setRouter();
-
 // 通过 navigationState 获取当前路由名称
-function getRouteName(navigationState) {
+function getRouteName (navigationState) {
   if (!navigationState) {
     return null;
   }
@@ -91,21 +93,8 @@ function getRouteName(navigationState) {
   return route.routeName;
 }
 
-// 对于不同平台和页面设置不同的状态栏颜色和底部TAB
-// function renderStatusBar(page) {
-//   StatusBar.setBarStyle('dark-content');
-//   if (page === 'Home') {
-//     // StatusBar.setBarStyle('dark-content');
-//     // DeviceEventEmitter.emit('ChangeSetBarStyle');
-//     // QFReactHelper.showMainTabbar(true);
-//   } else {
-//     // StatusBar.setBarStyle('dark-content');
-//     // QFReactHelper.showMainTabbar(false);
-//   }
-// }
-
 // 外联用户首页隐藏原生 APP 底部 TAB，并设置状态栏文字颜色
-function navigationChange(prevState, currentState) {
+function navigationChange (prevState, currentState) {
   const prevPage = getRouteName(prevState);
   const currentPage = getRouteName(currentState);
 
@@ -133,7 +122,7 @@ class Root extends PureComponent {
     this.initNavigator();
   }
 
-  componentWillMount() {
+  componentWillMount () {
     // 监听安卓后退按钮
     if (Platform.OS === 'android') {
       BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
@@ -141,7 +130,7 @@ class Root extends PureComponent {
     // UMNative.onPageBegin(navigatorConfig.initialRouteName);
   }
 
-  componentDidMount() {
+  componentDidMount () {
     if (!system.isIOS) {
       JPushModule.notifyJSDidLoad((resultCode) => {
         if (resultCode === 0) {
@@ -183,7 +172,7 @@ class Root extends PureComponent {
     });
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     if (Platform.OS === 'android') {
       BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
     }
@@ -194,6 +183,21 @@ class Root extends PureComponent {
     // android退出软件时提示removeOpenNotificationListener不是一个function
     // JPushModule.removeOpenNotificationListener();
   }
+
+
+  // 对于不同平台和页面设置不同的状态栏颜色和底部TAB
+  // function renderStatusBar(page) {
+  //   StatusBar.setBarStyle('dark-content');
+  //   if (page === 'Home') {
+  //     // StatusBar.setBarStyle('dark-content');
+  //     // DeviceEventEmitter.emit('ChangeSetBarStyle');
+  //     // QFReactHelper.showMainTabbar(true);
+  //   } else {
+  //     // StatusBar.setBarStyle('dark-content');
+  //     // QFReactHelper.showMainTabbar(false);
+  //   }
+  // }
+
 
   // 安卓后退按钮无后退页面时，提示退出
   onBackAndroid = () => {
@@ -210,7 +214,7 @@ class Root extends PureComponent {
     return true;
   };
 
-  async getMessage() {
+  async getMessage () {
     return global.storage
       .load({
         key: 'MessageData',
@@ -224,7 +228,7 @@ class Root extends PureComponent {
       .catch(() => []);
   }
 
-  async saveMessage(opts) {
+  async saveMessage (opts) {
     const data = await this.getMessage();
     const params = {
       content: opts.content,
@@ -244,7 +248,7 @@ class Root extends PureComponent {
   }
 
   // 根据用户类型定义路由入口,监听后退到主页
-  async initNavigator() {
+  async initNavigator () {
     // 设置状态栏文字颜色
     StatusBar.setBarStyle('dark-content');
 
@@ -263,18 +267,14 @@ class Root extends PureComponent {
 
     if (managerSid) {
       navigatorConfig.initialRouteName = 'TabHome';
-
       HTTPAdapter.initInterceptors();
       HTTPAdapter.setup({
         managerSid,
       });
     }
 
-    const MyNavigator = createStackNavigator(Routers, navigatorConfig);
-    // const MyNavigator = createStackNavigator({
-    //   Test: Routers.Test,
-    //   // TabHome: Routers.TabHome,
-    // });
+    MyNavigator = createStackNavigator(Routers, navigatorConfig);
+    AppContainer = createAppContainer(MyNavigator);
     const defaultGetStateForAction = MyNavigator.router.getStateForAction;
     //
     MyNavigator.router.getStateForAction = (action, state) => {
@@ -296,7 +296,7 @@ class Root extends PureComponent {
   }
 
   // 热更新过程中状态发生变化
-  codePushStatusDidChange(status) {
+  codePushStatusDidChange (status) {
     switch (status) {
       case codePush.SyncStatus.DOWNLOADING_PACKAGE:
         this.setState({
@@ -325,7 +325,7 @@ class Root extends PureComponent {
   }
 
   // 热更新下载包时实时更新已下载的字节数
-  codePushDownloadDidProgress(progress) {
+  codePushDownloadDidProgress (progress) {
     this.setState({
       progress: Math.round(progress.receivedBytes / progress.totalBytes * 100),
     });
@@ -334,7 +334,7 @@ class Root extends PureComponent {
     );
   }
 
-  render() {
+  render () {
     const { MyNavigator } = this.state;
     if (MyNavigator) {
       if (Platform.OS !== 'ios') {
@@ -352,8 +352,10 @@ class Root extends PureComponent {
           needCancle={false}
         />
       ) : (
-        <MyNavigator onNavigationStateChange={navigationChange} />
-      );
+          <AppContainer
+            onNavigationStateChange={navigationChange}
+          />
+        );
     }
     return null;
   }
