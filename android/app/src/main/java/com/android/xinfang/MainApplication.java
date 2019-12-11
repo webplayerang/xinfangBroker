@@ -11,8 +11,6 @@ import com.corbt.keepawake.KCKeepAwakePackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.rnfs.RNFSPackage;
-import com.reactnative.ivpusic.imagepicker.PickerPackage;
-import com.imagepicker.ImagePickerPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.beefe.picker.PickerViewPackage;
 import com.microsoft.codepush.react.CodePush;
@@ -64,7 +62,7 @@ public class MainApplication extends Application implements ReactApplication {
           new RNDeviceInfo(),
           new PickerViewPackage(),
           new CodePush(BuildConfig.CODEPUSH_KEY,getApplicationContext(), BuildConfig.DEBUG,"http://code-push.qfang.com:8899/"),
-          new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG), new ReactNativeContacts(), new ImagePickerPackage(),
+          new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG), new ReactNativeContacts(),
           new UmengReactPackage()
       );
     }

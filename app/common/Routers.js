@@ -4,7 +4,7 @@ import ScanQRcode from '../pages/Home/ScanQRcode';
 // 房贷计算器
 import MortgageCalculator from '../pages/MortgageCalculator';
 import ContactsList from '../components/ContactsList';
-import MyImagePicker from '../components/MyImagePicker';
+// import MyImagePicker from '../components/MyImagePicker';
 import MsgDemo from '../components/MsgDemo';
 // 日期插件
 import MyDatePicker from '../components/MyDatePicker';
