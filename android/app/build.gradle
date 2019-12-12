@@ -91,7 +91,7 @@ def enableSeparateBuildPerCPUArchitecture = false
  * Run Proguard to shrink the Java bytecode in release builds.
  */
 //混淆打包
-def enableProguardInReleaseBuilds = true
+// def enableProguardInReleaseBuilds = true
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -151,12 +151,32 @@ android {
             include "armeabi-v7a", "x86"
         }
     }
-
-    buildTypes {
-
+signingConfigs {
         release {
-            minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            storeFile file(XFBROKER_RELEASE_STORE_FILE)
+            storePassword XFBROKER_RELEASE_STORE_PASSWORD
+            keyAlias XFBROKER_RELEASE_KEY_ALIAS
+            keyPassword XFBROKER_RELEASE_KEY_PASSWORD
+        }
+    }
+    buildTypes {
+        debug {
+            buildConfigField "String", "PRODUCT_ID", '"3c0f4845-4fe5-4515-94f4-187aa82df709"'
+            buildConfigField "String", "CODEPUSH_KEY", '"H057qjHJPTMkf7U4EWXPE624zmwY4ksvOXqog"'
+            signingConfig signingConfigs.release
+        }
+        // 原本应定义为 Staging，由于 react 中的 build.gradle 在打包前检查 buildType 中是否有 release 关键字，便自动进行 react native 相关的 bundle 进行打包
+        releaseStaging {
+            // minifyEnabled enableProguardInReleaseBuilds
+            // proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
+            buildConfigField "String", "PRODUCT_ID", '"3c0f4845-4fe5-4515-94f4-187aa82df709"'
+            buildConfigField "String", "CODEPUSH_KEY", '"H057qjHJPTMkf7U4EWXPE624zmwY4ksvOXqog"'
+        }
+        release {
+            // minifyEnabled enableProguardInReleaseBuilds
+            // proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
             buildConfigField "String", "PRODUCT_ID", '"e3b906f9-2244-4244-9fa5-2467b28cd9a9"'
             buildConfigField "String", "CODEPUSH_KEY", '"ChiKEAlK1DRHEQqPLrYTjtSgLCZB4ksvOXqog"'
         }
@@ -195,10 +215,10 @@ dependencies {
     // implementation project(':janalytics-react-native')
     implementation project(':jpush-react-native')
     implementation project(':jcore-react-native')  // 添加 jcore 依赖
-
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+
     implementation 'com.umeng.analytics:analytics:latest.integration' // 友盟统计 SDK
     //okhttp
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
