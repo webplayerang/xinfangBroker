@@ -51,18 +51,18 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new OrientationPackage(),
-            new VectorIconsPackage(),
-            new KCKeepAwakePackage(),
-            new ReactVideoPackage(),
-            new LinearGradientPackage(),
-            new RNFSPackage(),
+          new OrientationPackage(),
+          new VectorIconsPackage(),
+          new KCKeepAwakePackage(),
+          new ReactVideoPackage(),
+          new LinearGradientPackage(),
+          new RNFSPackage(),
           new RCTCapturePackage(),
-          new PickerPackage(),
           new RNDeviceInfo(),
           new PickerViewPackage(),
           new CodePush(BuildConfig.CODEPUSH_KEY,getApplicationContext(), BuildConfig.DEBUG,"http://code-push.qfang.com:8899/"),
-          new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG), new ReactNativeContacts(),
+          new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
+          new ReactNativeContacts(),
           new UmengReactPackage()
       );
     }

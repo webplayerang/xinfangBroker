@@ -101,6 +101,27 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    packagingOptions {
+        exclude 'META-INF/androidx.localbroadcastmanager_localbroadcastmanager.version'
+        exclude 'META-INF/androidx.swiperefreshlayout_swiperefreshlayout.version'
+        exclude 'META-INF/androidx.asynclayoutinflater_asynclayoutinflater.version'
+        exclude 'META-INF/androidx.legacy_legacy-support-core-utils.version'
+        exclude 'META-INF/androidx.vectordrawable_vectordrawable.version'
+        exclude 'META-INF/androidx.cursoradapter_cursoradapter.version'
+        exclude 'META-INF/androidx.appcompat_appcompat.version'
+        exclude 'META-INF/androidx.viewpager_viewpager.version'
+        exclude 'META-INF/androidx.loader_loader.version'
+        exclude 'META-INF/androidx.drawerlayout_drawerlayout.version'
+        exclude 'META-INF/androidx.core_core.version'
+        exclude 'META-INF/androidx.print_print.version'
+        exclude 'META-INF/androidx.versionedparcelable_versionedparcelable.version'
+        exclude 'META-INF/androidx.vectordrawable_vectordrawable-animated.version'
+        exclude 'META-INF/androidx.interpolator_interpolator.version'
+        exclude 'META-INF/androidx.fragment_fragment.version'
+        exclude 'META-INF/androidx.customview_customview.version'
+        exclude 'META-INF/androidx.documentfile_documentfile.version'
+    }
+
     defaultConfig {
         applicationId "com.android.xinfang"
         minSdkVersion rootProject.ext.minSdkVersion

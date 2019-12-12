@@ -1,4 +1,4 @@
 <resources>
-    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">123</string>
-    <string name="app_name">xinfangBroker</string>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey"></string>
+    <string name="app_name">新房案场</string>
 </resources>
