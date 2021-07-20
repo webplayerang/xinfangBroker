@@ -24,7 +24,7 @@
     "native-echarts": "0.3.0",
     "prop-types": "15.6.0",
     "react": "16.8.3",
-    "react-native": "0.59.8",
+    "react-native": "0.62.3",
     "react-native-af-video-player": "^0.1.9",
     "react-native-camera": "^3.13.1",
     "react-native-code-push": "^5.6.0",
